@@ -13,5 +13,17 @@ class Command(BaseCommand):
             phones = list(csv.DictReader(file, delimiter=';'))
 
         for phone in phones:
+            #print(phone)
             # TODO: Добавьте сохранение модели
-            pass
+            new_phone = Phone(id = phone['id'],name = phone['name'],image = phone['image'],price = phone['price'],release_date = phone['release_date'],lte_exists = phone['lte_exists'])
+            try:
+                new_phone.save()
+            except:
+                print('Не удалось сохранить объект')
+            else:
+                try:
+                    buf = Phone.objects.get(id=phone['id'])
+                except:
+                    print('no such obj')
+                else:
+                    print(buf.name)
